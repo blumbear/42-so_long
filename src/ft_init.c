@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:20:43 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/02 15:13:13 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:37:16 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_init_exit(env_t **env, int pos_x, int pos_y)
 	(*env)->exit_pos_x = pos_x;
 	(*env)->exit_pos_y = pos_y;
 }
-void	ft_init_env(env_t **env)
+void	ft_init_env(mlx_t mlx, env_t **env)
 {
 	(*env)->player = false;
 	(*env)->player_pos_x = 0;
@@ -35,5 +35,14 @@ void	ft_init_env(env_t **env)
 	(*env)->exit_pos_x = 0;
 	(*env)->exit_pos_y = 0;
 	(*env)->collectible = 0;
+	init_texture(mlx, env);
 
+}
+
+void	init_texture(mlx_t mlx, env_t **env)
+{
+	
+	(*env)->t_player = mlx_load_png("texture/");
+	(*env)->t_floor = mlx_load_png("texture/");
+	(*env)->t_wall = mlx_load_png("texture/");
 }

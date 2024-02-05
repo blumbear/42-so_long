@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/02 15:32:58 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:27:34 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,43 +48,44 @@ int	chunck_test(char c, env_t	**env, int	i, int	j)
 	return (0);
 }
 
-void	map_pathway(char	**map, int	x, int	y)
+void	map_pathway(char	**map, int	y, int	x)
 {
-	if (ft_strchr("E0C",map[x][y]))
-		map[x][y] *= -1;
-	if (ft_strchr("E0C",map[x + 1][y]))
-		map_pathway(map, x + 1, y);
-	if (ft_strchr("E0C",map[x - 1][y]))
-		map_pathway(map, x - 1, y);
-	if (ft_strchr("E0C",map[x][y + 1]))
-		map_pathway(map, x, y + 1);
-	if (ft_strchr("E0C",map[x][y - 1]))
-		map_pathway(map, x, y - 1);
+	map[y][x] *= -1;
+	if (ft_strchr("E0C",map[y + 1][x]))
+		map_pathway(map, y + 1, x);
+	if (ft_strchr("E0C",map[y - 1][x]))
+		map_pathway(map, y - 1, x);
+	if (ft_strchr("E0C",map[y][x + 1]))
+		map_pathway(map, y, x + 1);
+	if (ft_strchr("E0C",map[y][x - 1]))
+		map_pathway(map, y, x - 1);
 }
 
-void	post_pathway(char	**map)
+void	post_pathway(char	**map, env_t **env)
 {
 	int	i;
 	int	j;
+	int	res;
 
 	i = 0;
+	res = 0;
 	while(map[i])
 	{
 		j = 0;
 		while(map[i][j])
 		{
-			if (map[i][j] == 1)
-				j++;
-			else if (map[i][j] < 0)
+			if (map[i][j] < 0)
 			{
 				map[i][j] *= -1;
-				j++;
+				if (map[i][j] == 'C')
+					res++;
 			}
-			else
-				ft_stop_function("THE_PLAYER_CANT_OPTAIN_EVERY_COLLECTIBLE_OR_THE_EXIT");
+			j++;
 		}
 		i++;
 	}
+	if (res != (*env)->collectible)
+		ft_stop_function("THE_PLAYER_CANT_OPTAIN_EVERY_COLLECTIBLE_OR_THE_EXIT");
 }
 
 int	map_surrounded(char **map, env_t **env)
@@ -117,7 +118,6 @@ int	map_is_verified(char **map, env_t **env)
 	int	j;
 
 	i = 0;
-	ft_init_env(env);
 	while (map[i])
 	{
 		j = 0;
@@ -131,7 +131,7 @@ int	map_is_verified(char **map, env_t **env)
 	}
 	post_process_test(env);
 	map_surrounded(map, env);
-	map_pathway(map, (*env)->player_pos_x, (*env)->player_pos_y);
-	// post_pathway(map);
+	map_pathway(map, (*env)->player_pos_y, (*env)->player_pos_x);
+	post_pathway(map, env);
 	return(1);
 }
