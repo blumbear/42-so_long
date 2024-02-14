@@ -1,9 +1,48 @@
-coder une fonction qui lis la map et qui affiche une image en fonction de la valeur de la case
+Coder une fonction qui lis la map et qui affiche une image en fonction de la valeur de la case
 ->
 for(int i=0; map[i];i++){
   for(int j=0; map[i][j];j++){
     if (map[i][j]=='1')
       mlx_image_to_window(mlx, env->wall_texture, j*5, i*5);
+    else if (map[i][j]=='0')
+      mlx_image_to_window(mlx, env->floor_texture, j*5, i*5);
+    else if (map[i][j]=='C')
+      mlx_image_to_window(mlx, env->collectible_texture, j*5, i*5);
+    else if (map[i][j]=='E')
+      mlx_image_to_window(mlx, env->exit_texture, j*5, i*5);
+    else if (map[i][j]=='P')
+      mlx_image_to_window(mlx, env->player_texture, j*5, i*5);
 }
 }
-rajouter des if pour chaque caractere possible et cahnger la taille en fonction de la taille voulu pour chaque image.
+
+Une fonction qui init les texture dans la structure et modifier la structure pour que ça marche
+->
+typedef struct env
+{
+	bool	        player;
+	int		        player_pos_x;
+	int		        player_pos_y;
+	int		        player_dir;
+	bool	        exit;
+	int		        exit_pos_x;
+	int		        exit_pos_y;
+	int		        collectible;
+	int		        map_height;
+	int 	        map_width;
+  mlx_image_t  wall_texture;
+  mlx_image_t  floor_texture;
+  mlx_image_t  exit_texture;
+  mlx_image_t  collectible_texture;
+  mlx_image_t  player_texture;
+}	env_t;
+
+void  init_texture(mlx_t *mlx, env_t *env)
+{
+  env->wall_texture = mlx_texture_to_image(mlx, mlx_load_png(path));
+  env->floor_texture = mlx_texture_to_image(mlx, mlx_load_png(path));
+  env->exit_texture = mlx_texture_to_image(mlx, mlx_load_png(path));
+  env->collectible_texture = mlx_texture_to_image(mlx, mlx_load_png(path));
+  env->player_texture = mlx_texture_to_image(mlx, mlx_load_png(path));
+}
+
+modifier tte les apparitions de env et mlx pour ne pas appeler l'addresse mais juste les pointeurs
