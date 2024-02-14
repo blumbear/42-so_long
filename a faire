@@ -1,0 +1,9 @@
+coder une fonction qui lis la map et qui affiche une image en fonction de la valeur de la case
+->
+for(int i=0; map[i];i++){
+  for(int j=0; map[i][j];j++){
+    if (map[i][j]=='1')
+      mlx_image_to_window(mlx, env->wall_texture, j*5, i*5);
+}
+}
+rajouter des if pour chaque caractere possible et cahnger la taille en fonction de la taille voulu pour chaque image.
