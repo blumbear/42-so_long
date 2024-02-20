@@ -6,43 +6,71 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:20:43 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/05 14:37:16 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/19 16:15:11 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_init_player(env_t **env, int pos_x, int pos_y)
+void	ft_init_player(env_t *env, int pos_x, int pos_y)
 {
-	(*env)->player = true;
-	(*env)->player_pos_x = pos_x;
-	(*env)->player_pos_y = pos_y;
+	env->player = true;
+	env->player_pos_x = pos_x;
+	env->player_pos_y = pos_y;
 }
 
-void	ft_init_exit(env_t **env, int pos_x, int pos_y)
+void	ft_init_exit(env_t *env, int pos_x, int pos_y)
 {
-	(*env)->exit = true;
-	(*env)->exit_pos_x = pos_x;
-	(*env)->exit_pos_y = pos_y;
-}
-void	ft_init_env(mlx_t mlx, env_t **env)
-{
-	(*env)->player = false;
-	(*env)->player_pos_x = 0;
-	(*env)->player_pos_y = 0;
-	(*env)->player_dir = RIGHT;
-	(*env)->exit = false;
-	(*env)->exit_pos_x = 0;
-	(*env)->exit_pos_y = 0;
-	(*env)->collectible = 0;
-	init_texture(mlx, env);
-
+	env->exit = true;
+	env->exit_pos_x = pos_x;
+	env->exit_pos_y = pos_y;
 }
 
-void	init_texture(mlx_t mlx, env_t **env)
+void  init_player_image(mlx_t *mlx, env_t *env)
 {
-	
-	(*env)->t_player = mlx_load_png("texture/");
-	(*env)->t_floor = mlx_load_png("texture/");
-	(*env)->t_wall = mlx_load_png("texture/");
+	texture_t	tmp;
+
+	tmp.a = mlx_load_png("texture/player/player_down.png");
+	tmp.b = mlx_load_png("texture/player/player_up.png");
+	tmp.c = mlx_load_png("texture/player/player_left.png");
+	tmp.d = mlx_load_png("texture/player/player_right.png");
+	env->player_image.down = mlx_texture_to_image(mlx, tmp.a);
+	env->player_image.up = mlx_texture_to_image(mlx, tmp.b);
+	env->player_image.left = mlx_texture_to_image(mlx, tmp.c);
+	env->player_image.right = mlx_texture_to_image(mlx, tmp.d);
+}
+
+void  init_wall_image(mlx_t *mlx, env_t *env)
+{
+	texture_t	tmp;
+
+	tmp.a = mlx_load_png("texture/wall/reduced_full.png");
+	tmp.b = mlx_load_png("texture/wall/full.png");
+	tmp.c = mlx_load_png("texture/wall/top.png");
+	env->wall_image.reduced_full = mlx_texture_to_image(mlx, tmp.a);
+	env->wall_image.full = mlx_texture_to_image(mlx, tmp.b);
+	env->wall_image.top = mlx_texture_to_image(mlx, tmp.c);
+}
+
+void  init_image(mlx_t *mlx, env_t *env)
+{
+	texture_t	tmp;
+
+	tmp.a = mlx_load_png("texture/floor.png");
+	tmp.b = mlx_load_png("texture/exit.png");
+	tmp.c = mlx_load_png("texture/collectible.png");
+	env->floor_image = mlx_texture_to_image(mlx, tmp.a);
+	env->exit_image = mlx_texture_to_image(mlx, tmp.b);
+	env->collectible_image = mlx_texture_to_image(mlx, tmp.c);
+	init_wall_image(mlx, env);
+	init_player_image(mlx, env);
+}
+
+void	ft_init_env(env_t *env)
+{
+	env->player = false;
+	env->player_dir = RIGHT;
+	env->exit = false;
+	env->collectible = 0;
+	env->collectible_obtained = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:29:06 by W2Wizard          #+#    #+#             */
-/*   Updated: 2024/02/01 14:35:19 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/15 13:45:55 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,7 +411,7 @@ typedef enum mlx_settings
  * @param[in] ydelta The mouse y delta.
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_scrollfunc)(double xdelta, double ydelta, void* param);
+typedef void (mlx_scrollfunc)(double xdelta, double ydelta, void* param);
 
 /**
  * Callback function used to handle mouse actions.
@@ -421,7 +421,7 @@ typedef void (*mlx_scrollfunc)(double xdelta, double ydelta, void* param);
  * @param[in] mods The modifier keys pressed together with the mouse key.
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_mousefunc)(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+typedef void (mlx_mousefunc)(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
 
 /**
  * Callback function used to handle raw mouse movement.
@@ -430,7 +430,7 @@ typedef void (*mlx_mousefunc)(mouse_key_t button, action_t action, modifier_key_
  * @param[in] ypos The mouse y position.
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_cursorfunc)(double xpos, double ypos, void* param);
+typedef void (mlx_cursorfunc)(double xpos, double ypos, void* param);
 
 /**
  * Callback function used to handle key presses.
@@ -438,7 +438,7 @@ typedef void (*mlx_cursorfunc)(double xpos, double ypos, void* param);
  * @param[in] keydata The callback data, contains info on key, action, ...
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_keyfunc)(mlx_key_data_t keydata, void* param);
+typedef void (mlx_keyfunc)(mlx_key_data_t keydata, void* param);
 
 /**
  * Callback function used to handle window resizing.
@@ -450,7 +450,7 @@ typedef void (*mlx_keyfunc)(mlx_key_data_t keydata, void* param);
  * @param[in] height The new height of the window. 
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_resizefunc)(int32_t width, int32_t height, void* param);
+typedef void (mlx_resizefunc)(int32_t width, int32_t height, void* param);
 
 /**
  * Callback function used to handle window closing which is called when 
@@ -459,7 +459,7 @@ typedef void (*mlx_resizefunc)(int32_t width, int32_t height, void* param);
  * 
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_closefunc)(void* param);
+typedef void (mlx_closefunc)(void* param);
 
 /** 
  * Typedef for a window cursor object, these eventually expand to

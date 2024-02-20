@@ -1,7 +1,5 @@
 NAME = so_long
 
-MAKEFLAGS += -s
-
 LIBMLX = lib/libmlx42.a
 LIBAMOA = lib/libamoa.a
 
@@ -12,7 +10,7 @@ CFLAGS = -Wall -Wextra -Werror -g -Iinclude
 LFLAGS = -Llib \
 			-lmlx42 -lamoa -ldl -lglfw -lXext -lX11 -lm
 
-FILES = main parsing map_test ft_init
+FILES = main parsing map_test ft_init load_map error move interaction
 
 OBJ_DIR = obj/
 SRC_DIR = src/
