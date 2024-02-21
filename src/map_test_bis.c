@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:21:36 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/21 17:29:20 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/21 17:37:52 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	map_is_verified(char **map, t_env *env)
 		while (env->map[i][j] != '\n' && env->map[i][j] != '\0')
 		{
 			if (!chunck_test(env->map[i][j], env, i, j))
-				continue;
+				continue ;
 			j++;
 		}
 		i++;
