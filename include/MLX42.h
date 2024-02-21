@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:29:06 by W2Wizard          #+#    #+#             */
-/*   Updated: 2024/02/15 13:45:55 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/21 14:57:26 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -895,7 +895,7 @@ bool mlx_resize_image(mlx_image_t* img, uint32_t nwidth, uint32_t nheight);
  * Sets the depth / Z axis value of an instance.
  * 
  * NOTE: Keep in mind that images that are on the same Z layer cut each other off.
- * so if you don't see your image anymore make sure it's not conflicting by being on
+ * so if you don't see your e anymorimage make sure it's not conflicting by being on
  * the same layer as another image.
  * 
  * @param[in] instance The instance on which to change the depth.

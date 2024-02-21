@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:28:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/19 14:53:06 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:47:42 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	line_check(char	*line, size_t width)
 	return (0);
 }
 
-int	pre_parse(env_t *env, int fd)
+int	pre_parse(t_env *env, int fd)
 {
 	char	*tmp;
 	int		height;
@@ -29,33 +29,37 @@ int	pre_parse(env_t *env, int fd)
 	height = 0;
 	tmp = get_next_line(fd);
 	env->map_width = ft_strlen(tmp) - 2;
+	if (env->map_width < 3)
+		stop_prog("The map are not usable", env);
 	while (tmp != NULL)
 	{
 		if (!line_check(tmp, env->map_width))
-			stop_prog("The map are not rectangular.");
+			stop_prog("The map are not rectangular.", env);
 		height++;
 		tmp = get_next_line(fd);
 	}
+	if (height < 3)
+		stop_prog("The map are not usable", env);
 	env->map_height = height;
 	close(fd);
 	return (1);
 }
 
-char	**parse(char *path, env_t *env)
+char	**parse(char *path, t_env *env)
 {
 	char	**map;
 	char	*tmp;
 	int		i;
 	int		fd;
 
-	fd = open(path,O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (!fd)
-		stop_prog("The file are not found.");
+		stop_prog("The file are not found.", env);
 	pre_parse(env, fd);
-	fd = open(path,O_RDONLY);
+	fd = open(path, O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
-		stop_prog("The map are not usable.");
+		stop_prog("The map are not usable.", env);
 	map = NULL;
 	map = malloc(sizeof(char *) * env->map_height + 1);
 	i = 0;

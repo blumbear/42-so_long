@@ -6,29 +6,29 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:20:43 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/19 16:15:11 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:49:01 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_init_player(env_t *env, int pos_x, int pos_y)
+void	ft_init_player(t_env *env, int pos_x, int pos_y)
 {
 	env->player = true;
 	env->player_pos_x = pos_x;
 	env->player_pos_y = pos_y;
 }
 
-void	ft_init_exit(env_t *env, int pos_x, int pos_y)
+void	ft_init_exit(t_env *env, int pos_x, int pos_y)
 {
 	env->exit = true;
 	env->exit_pos_x = pos_x;
 	env->exit_pos_y = pos_y;
 }
 
-void  init_player_image(mlx_t *mlx, env_t *env)
+void	init_player_image(mlx_t *mlx, t_env *env)
 {
-	texture_t	tmp;
+	t_texture	tmp;
 
 	tmp.a = mlx_load_png("texture/player/player_down.png");
 	tmp.b = mlx_load_png("texture/player/player_up.png");
@@ -40,9 +40,9 @@ void  init_player_image(mlx_t *mlx, env_t *env)
 	env->player_image.right = mlx_texture_to_image(mlx, tmp.d);
 }
 
-void  init_wall_image(mlx_t *mlx, env_t *env)
+void	init_wall_image(mlx_t *mlx, t_env *env)
 {
-	texture_t	tmp;
+	t_texture	tmp;
 
 	tmp.a = mlx_load_png("texture/wall/reduced_full.png");
 	tmp.b = mlx_load_png("texture/wall/full.png");
@@ -52,9 +52,9 @@ void  init_wall_image(mlx_t *mlx, env_t *env)
 	env->wall_image.top = mlx_texture_to_image(mlx, tmp.c);
 }
 
-void  init_image(mlx_t *mlx, env_t *env)
+void	init_image(mlx_t *mlx, t_env *env)
 {
-	texture_t	tmp;
+	t_texture	tmp;
 
 	tmp.a = mlx_load_png("texture/floor.png");
 	tmp.b = mlx_load_png("texture/exit.png");
@@ -64,13 +64,4 @@ void  init_image(mlx_t *mlx, env_t *env)
 	env->collectible_image = mlx_texture_to_image(mlx, tmp.c);
 	init_wall_image(mlx, env);
 	init_player_image(mlx, env);
-}
-
-void	ft_init_env(env_t *env)
-{
-	env->player = false;
-	env->player_dir = RIGHT;
-	env->exit = false;
-	env->collectible = 0;
-	env->collectible_obtained = 0;
 }
