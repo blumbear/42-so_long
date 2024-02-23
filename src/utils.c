@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:56:19 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/23 16:22:28 by tom              ###   ########.fr       */
+/*   Updated: 2024/02/23 16:43:35 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	stop_prog(char	*error, t_env	*env, bool print_error)
+void	stop_prog(char	*error, t_env	*env, bool print_error, char *to_free)
 {
 	if (print_error)
 		ft_printf("ERROR: %s\n", error);
@@ -21,6 +21,8 @@ void	stop_prog(char	*error, t_env	*env, bool print_error)
 		ft_free_lststr(env->map);
 		free(env->map);
 	}
+	if (to_free)
+		free(to_free);
 	mlx_terminate(env->mlx);
 	exit(0);
 }

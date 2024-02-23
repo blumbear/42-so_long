@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:21:36 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/23 16:04:52 by tom              ###   ########.fr       */
+/*   Updated: 2024/02/23 16:41:59 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	map_surrounded(char **map, t_env *env)
 			while (map[i][j] == '1')
 				j++;
 			if (j - 1 != env->map_width)
-				stop_prog("The map is not surrounded by wall.", env, true);
+				stop_prog("The map is not surrounded by wall.", env, true, NULL);
 		}
 		else
 			if (map[i][0] != '1' || map[i][env->map_width] != '1')
-				stop_prog("The map is not surrounded by wall.", env, true);
+				stop_prog("The map is not surrounded by wall.", env, true, NULL);
 		i++;
 	}
 }
@@ -61,5 +61,5 @@ void	map_is_verified(char **map, t_env *env)
 void	check_path_name(char	*path, t_env	*env)
 {
 	if (ft_strncmp(path + (ft_strlen(path) - 4), ".ber", 4) != 0)
-		stop_prog("The map must be in the format '.ber'.", env, true);
+		stop_prog("The map must be in the format '.ber'.", env, true, NULL);
 }

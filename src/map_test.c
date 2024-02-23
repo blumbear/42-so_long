@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/23 16:05:34 by tom              ###   ########.fr       */
+/*   Updated: 2024/02/23 16:42:30 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	post_process_test(t_env *env)
 {
 	if (env->collectible < 1)
-		stop_prog("Not enough collectible.", env, true);
+		stop_prog("Not enough collectible.", env, true, NULL);
 	if (env->player == false)
-		stop_prog("Not enough player.", env, true);
+		stop_prog("Not enough player.", env, true, NULL);
 	if (env->exit == false)
-		stop_prog("Not enough exit.", env, true);
+		stop_prog("Not enough exit.", env, true, NULL);
 }
 
 int	chunck_test(char c, t_env	*env, int y, int x)
@@ -29,16 +29,16 @@ int	chunck_test(char c, t_env	*env, int y, int x)
 		if (c == 'C')
 			env->collectible += 1;
 		if (c == 'P' && env->player == true)
-			stop_prog("Too much exit.", env, true);
+			stop_prog("Too much exit.", env, true, NULL);
 		else if (c == 'P' && env->player == false)
 			ft_init_player(env, x, y);
 		if (c == 'E' && env->exit == true)
-			stop_prog("Too much exit.", env, true);
+			stop_prog("Too much exit.", env, true, NULL);
 		else if (c == 'E' && env->exit == false)
 			ft_init_exit(env, x, y);
 		return (1);
 	}
-	stop_prog("An undefined character are use.", env, true);
+	stop_prog("An undefined character are use.", env, true, NULL);
 	return (0);
 }
 
@@ -78,5 +78,5 @@ void	post_pathway(char	**map, t_env *env)
 		}
 	}
 	if (res != env->collectible)
-		stop_prog("The player cant optain every collectible.", env, true);
+		stop_prog("The player cant optain every collectible.", env, true, NULL);
 }

@@ -1,14 +1,14 @@
 NAME = so_long
 
 LIBMLX = lib/libmlx42.a
-LIBAMOA = lib/libamoa.a
+LIBAMOA = lib/libamoa/libamoa.a
 
 CC = cc
 
 CFLAGS += -Wall -Wextra -Werror -g -Iinclude
 
 LFLAGS = -Llib \
-			-lmlx42 -lamoa -ldl -lglfw -lXext -lX11 -lm
+			-lmlx42 -ldl -lglfw -lXext -lX11 -lm
 
 FILES = ft_init interaction load_map main map_test map_test_bis \
 move parsing utils
@@ -39,7 +39,7 @@ deps:
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBMLX) $(LIBAMOA)
 	@echo "\033[32m✔ Compilation des fichiers sources...\033[37m"
-	$(CC) -o $@ $(OBJS) $(LFLAGS)
+	$(CC) -o $@ $(OBJS) $(LIBAMOA) $(LFLAGS)
 	@echo "\033[32m✔ executable crée...\033[37m"
 
 $(OBJ_DIR):

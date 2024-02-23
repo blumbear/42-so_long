@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:44:53 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/23 16:04:39 by tom              ###   ########.fr       */
+/*   Updated: 2024/02/23 16:41:42 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 	static t_env	env = {};
 
 	if (ac != 2)
-		stop_prog("Not enough arguments.", &env, true);
+		stop_prog("Not enough arguments.", &env, true, NULL);
 	check_path_name(av[1], &env);
 	env.map = parse(av[1], &env);
 	map_is_verified(env.map, &env);

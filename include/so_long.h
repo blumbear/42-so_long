@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/23 16:04:02 by tom              ###   ########.fr       */
+/*   Updated: 2024/02/23 16:41:33 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,7 +379,7 @@ char	**parse(char *fd, t_env *env);
  * @param env The variable t_env
  * @param print_error An bool whether print error or not
  */
-void	stop_prog(char	*error, t_env	*env, bool print_error);
+void	stop_prog(char	*error, t_env	*env, bool print_error, char *to_free);
 
 /**
  * @brief This function print The map and his this in the terminal
