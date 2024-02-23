@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:44:53 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/21 17:14:02 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:01:48 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int	main(int ac, char **av)
 {
 	static t_env	env = {};
 
-	env.mlx = NULL;
 	if (ac != 2)
-		stop_prog("Not enought arguments.", &env);
+		stop_prog("Not enough arguments.", &env);
 	check_path_name(av[1], &env);
 	env.map = parse(av[1], &env);
 	map_is_verified(env.map, &env);

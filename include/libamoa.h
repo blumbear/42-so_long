@@ -20,7 +20,6 @@
 # include <limits.h>
 # include <stdbool.h>
 
-
 /******************************************************************************/
 /*                                                                            */
 /* Structures                                                                 */
@@ -347,7 +346,7 @@ char			*ft_substr(char const *str, unsigned int start, size_t len);
  * @param s2 The suffix string.
  * @return The new string or `NULL` if the allocation fails.
  */
-char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin(char *s1, char const *s2);
 
 /**
  * @brief Allocates (with malloc(3)) and returns a copy of `str` with the
@@ -427,6 +426,16 @@ int				ft_atoi(const char *str);
  */
 void			*ft_calloc(size_t nmemb, size_t size);
 
+/**
+ * @brief Allocates memory from the 'ptr' to the size 'size', if the 'ptr' 
+ * are allocated it's a simple malloc otherwise the fonction will 
+ * allocated size from the start of the array 'ptr'.
+ * @param ptr the start of the memory.
+ * @param size The numbers of elements.
+ * @return Return a pointer to the allocated memory or NULL if case of error.
+ */
+void			*ft_realloc(void *ptr, size_t newsize);
+
 /******************************************************************************/
 /*                                                                            */
 /* IO                                                                         */
@@ -473,7 +482,91 @@ void			ft_putnbr_fd(signed int n, int fd);
 
 /******************************************************************************/
 /*                                                                            */
-/* Security                                                                   */
+/* Linked list                                                                */
+/*                                                                            */
+/******************************************************************************/
+
+/**
+ * @brief Allocates (with malloc(3)) and returns a new node. The member variable
+ * `content` is initialized with the value of the parameter `content`.
+ * The variable `next` is initialized to `NULL`.
+ * @param content The content to create the node with.
+ * @return The new node.
+ */
+t_list			*ft_lstnew(void *content);
+
+/**
+ * @brief Adds the node `new` at the beginning of `list`.
+ * @param list The address of a pointer to the first link of a list.
+ * @param new The address of a pointer to the node to be added to the list.
+ */
+void			ft_lstadd_front(t_list **lst, t_list *new);
+
+/**
+ * @brief Counts the number of nodes in a list.
+ * @param list The beginning of the list.
+ * @return The length of the list.
+ */
+int				ft_lstsize(t_list *list);
+
+/**
+ * @brief Returns the last node of the list.
+ * @param list The beginning of the list.
+ * @return Last node of the list.
+ */
+t_list			*ft_lstlast(t_list *list);
+
+/**
+ * @brief Adds the node `new` at the end of the list.
+ * @param list The address of a pointer to the first link of a list.
+ * @param new The address of a pointer to the node to be added to the list.
+ */
+void			ft_lstadd_back(t_list **list, t_list *new);
+
+/**
+ * @brief Takes as a parameter a node and frees the memory of the node’s content
+ * using the function `del_fun` given as a parameter and free the node. The
+ * memory of `next` must not be freed.
+ * @param list The node to free.
+ * @param del_fun The address of the function used to delete the content.
+ */
+void			ft_lstdelone(t_list *list, void (*del_fun)(void *));
+
+/**
+ * @brief Deletes and frees the given node and every successor of that node,
+ * using the function `del_fun` and free(3). Finally, the pointer to the list
+ * must be set to `NULL`.
+ * @param list The address of a pointer to a node.
+ * @param del_fun The address of the function used to delete the content of the
+ * node.
+ */
+void			ft_lstclear(t_list **list, void (*del_fun)(void *));
+
+/**
+ * @brief Iterates the list `list` and applies the function `f` on the content
+ * of each node.
+ * @param list The address of a pointer to a node.
+ * @param f The address of the function used to iterate on the list.
+ */
+void			ft_lstiter(t_list *list, void (*f)(void *));
+
+/**
+ * @brief Iterates the list `list` and applies the function `f` on the content of
+ * each node. Creates a new list resulting of the successive applications of the
+ * function `f`. The `del_fun` function is used to delete the content of a node
+ * if needed.
+ * @param list The address of a pointer to a node.
+ * @param f The address of the function used to iterate on the list.
+ * @param del_fun The address of the function used to delete the content of a
+ * node if needed.
+ * @return The new list or `NULL` if the allocation fail.
+ */
+t_list			*ft_lstmap(t_list *list, void *(*f)(void *),
+					void (*del_fun)(void *));
+
+/******************************************************************************/
+/*                                                                            */
+/* SAFE                                                                       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -482,7 +575,7 @@ void			ft_putnbr_fd(signed int n, int fd);
  * 
  * @param lst an tab who are free after this function
  */
-void			ft_freellst(char **lst);
+void			ft_free_lststr(char **lst);
 
 /**
  * @brief this fuction will free every node of an t_list type

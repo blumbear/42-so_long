@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:26:23 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/21 17:17:18 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/22 16:05:06 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	up(t_env	*env)
 			env->map[env->player_pos_y][env->player_pos_x] = 'E';
 		env->player_image.down->instances[0].y -= 32;
 		env->player_pos_y -= 1;
+		env->player_movement += 1;
 		print_on_move(env);
 	}
 	exit_test(env, env->player_pos_x, env->player_pos_y);
@@ -42,6 +43,7 @@ void	down(t_env	*env)
 			env->map[env->player_pos_y][env->player_pos_x] = '0';
 		env->player_image.down->instances[0].y += 32;
 		env->player_pos_y += 1;
+		env->player_movement += 1;
 		print_on_move(env);
 	}
 	exit_test(env, env->player_pos_x, env->player_pos_y);
@@ -59,6 +61,7 @@ void	left(t_env	*env)
 			env->map[env->player_pos_y][env->player_pos_x - 1] = 'E';
 		env->player_image.down->instances[0].x -= 32;
 		env->player_pos_x -= 1;
+		env->player_movement += 1;
 		print_on_move(env);
 	}
 	exit_test(env, env->player_pos_x, env->player_pos_y);
@@ -76,6 +79,7 @@ void	right(t_env	*env)
 			env->map[env->player_pos_y][env->player_pos_x + 1] = 'E';
 		env->player_image.down->instances[0].x += 32;
 		env->player_pos_x += 1;
+		env->player_movement += 1;
 		print_on_move(env);
 	}
 	exit_test(env, env->player_pos_x, env->player_pos_y);
@@ -87,10 +91,7 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 
 	env = (t_env *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-	{
-		mlx_terminate(env->mlx);
-		exit(0);
-	}
+		stop_prog("\0", env);
 	else if (mlx_is_key_down(env->mlx, MLX_KEY_W)
 		|| mlx_is_key_down(env->mlx, MLX_KEY_UP))
 		up(env);

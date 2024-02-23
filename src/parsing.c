@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:28:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/21 16:47:42 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:02:31 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	line_check(char	*line, size_t width)
 	return (0);
 }
 
-int	pre_parse(t_env *env, int fd)
+/* changer strop prog et lui mettre ... en argument */
+
+void	pre_parse(t_env *env, int fd)
 {
 	char	*tmp;
 	int		height;
@@ -30,19 +32,25 @@ int	pre_parse(t_env *env, int fd)
 	tmp = get_next_line(fd);
 	env->map_width = ft_strlen(tmp) - 2;
 	if (env->map_width < 3)
+	{
+		free(tmp);
 		stop_prog("The map are not usable", env);
+	}
 	while (tmp != NULL)
 	{
 		if (!line_check(tmp, env->map_width))
+		{
+			free(tmp);
 			stop_prog("The map are not rectangular.", env);
+		}
 		height++;
+		free(tmp);
 		tmp = get_next_line(fd);
 	}
 	if (height < 3)
 		stop_prog("The map are not usable", env);
 	env->map_height = height;
 	close(fd);
-	return (1);
 }
 
 char	**parse(char *path, t_env *env)
@@ -61,7 +69,7 @@ char	**parse(char *path, t_env *env)
 	if (!tmp)
 		stop_prog("The map are not usable.", env);
 	map = NULL;
-	map = malloc(sizeof(char *) * env->map_height + 1);
+	map = malloc(sizeof(char *) * (env->map_height + 1));
 	i = 0;
 	while (tmp != NULL)
 	{
@@ -69,5 +77,7 @@ char	**parse(char *path, t_env *env)
 		i++;
 		tmp = get_next_line(fd);
 	}
+	map[i] = NULL;
+	close(fd);
 	return (map);
 }

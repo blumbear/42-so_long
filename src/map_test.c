@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/21 17:29:01 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/22 16:06:44 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	post_process_test(t_env *env)
 {
 	if (env->collectible < 1)
-		stop_prog("Not enought collectible.", env);
+		stop_prog("Not enough collectible.", env);
 	if (env->player == false)
-		stop_prog("Not enought player.", env);
+		stop_prog("Not enough player.", env);
 	if (env->exit == false)
-		stop_prog("Not enought exit.", env);
+		stop_prog("Not enough exit.", env);
 }
 
 int	chunck_test(char c, t_env	*env, int y, int x)
