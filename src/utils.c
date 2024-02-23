@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:56:19 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/22 16:07:00 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/23 16:22:28 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	stop_prog(char	*error, t_env	*env)
+void	stop_prog(char	*error, t_env	*env, bool print_error)
 {
-	ft_printf("ERROR: %s\n", error);
+	if (print_error)
+		ft_printf("ERROR: %s\n", error);
 	if (env->map)
 	{
 		ft_free_lststr(env->map);

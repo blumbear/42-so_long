@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:26:23 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/22 16:05:06 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/23 16:06:27 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 
 	env = (t_env *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		stop_prog("\0", env);
+		stop_prog("\0", env, false);
 	else if (mlx_is_key_down(env->mlx, MLX_KEY_W)
 		|| mlx_is_key_down(env->mlx, MLX_KEY_UP))
 		up(env);
