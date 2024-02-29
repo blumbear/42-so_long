@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 14:51:11 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:34:12 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	chunck_test(char c, t_env	*env, int y, int x)
 		if (c == 'C')
 			env->collectible += 1;
 		if (c == 'P' && env->player == true)
-			stop_prog("Too much exit.", env, true, NULL);
+			stop_prog("Too much player.", env, true, NULL);
 		else if (c == 'P' && env->player == false)
 			ft_init_player(env, x, y);
 		if (c == 'E' && env->exit == true)

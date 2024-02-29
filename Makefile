@@ -11,7 +11,7 @@ LFLAGS = -Llib \
 			-lmlx42 -ldl -lglfw -lXext -lX11 -lm
 
 FILES = ft_init interaction load_map main map_test map_test_bis \
-move parsing utils
+move parsing print_and_error utils
 
 OBJ_DIR = obj/
 SRC_DIR = src/
@@ -36,6 +36,7 @@ re: fclean all
 
 deps:
 	$(MAKE) -C lib/libamoa
+	$(MAKE) clean -C lib/libamoa
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBMLX) $(LIBAMOA)
 	@echo "\033[32m✔ Compilation des fichiers sources...\033[37m"

@@ -6,16 +6,17 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 15:31:11 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:11:31 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	load_image(mlx_t	*mlx, t_coord coord, mlx_image_t *image)
+void	load_image(mlx_t	*mlx, t_coord coord, mlx_image_t *image, bool enabled)
 {
 	mlx_image_to_window(mlx, image, coord.x * 32, coord.y * 32);
 	mlx_set_instance_depth(&image->instances[image->count - 1], coord.z);
+	image->instances->enabled = enabled;
 }
 
 void	pre_load_image(int y, int x, t_env	*env)
@@ -25,16 +26,16 @@ void	pre_load_image(int y, int x, t_env	*env)
 	tmp.x = x;
 	tmp.y = y + 1;
 	tmp.z = FLOOR_DEPTH;
-	load_image(env->mlx, tmp, env->floor_image);
+	load_image(env->mlx, tmp, env->floor_image, true);
 	if (env->map[y][x] == 'E')
 	{
 		tmp.z = EXIT_DEPTH;
-		load_image(env->mlx, tmp, env->exit_image);
+		load_image(env->mlx, tmp, env->exit_image, true);
 	}
 	if (env->map[y][x] == 'C')
 	{
 		tmp.z = COLLECIBLE_DEPTH;
-		load_image(env->mlx, tmp, env->collectible_image);
+		load_image(env->mlx, tmp, env->collectible_image, true);
 	}
 	if (env->map[y][x] == 'P')
 		pre_load_player(tmp, env);
@@ -44,11 +45,10 @@ void	pre_load_player(t_coord coord, t_env *env)
 {
 	env->player_dir = DOWN;
 	coord.z = PLAYER_DEPTH;
-	load_image(env->mlx, coord, env->player_image.down);
-	coord.z = HIDE_PLAYER_DEPTH;
-	load_image(env->mlx, coord, env->player_image.up);
-	load_image(env->mlx, coord, env->player_image.left);
-	load_image(env->mlx, coord, env->player_image.right);
+	load_image(env->mlx, coord, env->player_image.down, true);
+	load_image(env->mlx, coord, env->player_image.up, false);
+	load_image(env->mlx, coord, env->player_image.left, false);
+	load_image(env->mlx, coord, env->player_image.right, false);
 }
 
 void	load_wall(int x, int y, t_env	*env)
@@ -68,7 +68,7 @@ void	load_wall(int x, int y, t_env	*env)
 }
 
 void	load_map(t_env	*env, char	**map)
-{
+{	
 	int	i;
 	int	j;
 
@@ -86,4 +86,5 @@ void	load_map(t_env	*env, char	**map)
 		}
 		i++;
 	}
+	mlx_put_string(env->mlx, "1", ((env->map_width / 2) - 2) * 32, (env->map_height + 1) * 32);
 }

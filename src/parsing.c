@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:28:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 14:34:01 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:59:47 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,57 +21,37 @@ int	line_check(char	*line, size_t width)
 	return (0);
 }
 
-void	pre_parse(t_env *env, int fd)
+void	parse(t_env *env, char *map_path)
 {
-	char	*tmp;
-	int		height;
+	int fd;
 
-	height = 0;
-	tmp = get_next_line(fd);
-	if (!tmp)
-		stop_prog("The map are not usable", env, true, NULL);
-	env->map_width = ft_strlen(tmp) - 2;
-	if (env->map_width < 3)
-		stop_prog("The map are not usable", env, true, tmp);
-	while (tmp != NULL)
-	{
-		if (!line_check(tmp, env->map_width))
-			stop_prog("The map are not rectangular.", env, true, tmp);
-		height++;
-		free(tmp);
-		tmp = get_next_line(fd);
-	}
-	if (height < 3)
-		stop_prog("The map are not usable", env, true, NULL);
-	env->map_height = height;
-	close(fd);
-}
-
-char	**parse(char *path, t_env *env)
-{
-	char	**map;
-	char	*tmp;
-	int		i;
-	int		fd;
-
-	fd = open(path, O_RDONLY);
+	fd = open(map_path, O_RDONLY);
 	if (!fd)
 		stop_prog("The file are not found.", env, true, NULL);
-	pre_parse(env, fd);
-	fd = open(path, O_RDONLY);
-	tmp = get_next_line(fd);
-	if (!tmp)
+	if (read_map(0, env, fd) == -1)
+		stop_prog("The map are not rectangular", env, true, NULL);
+	if (env->map_height < 3 && env->map_width < 3)
 		stop_prog("The map are not usable.", env, true, NULL);
-	map = NULL;
-	map = malloc(sizeof(char *) * (env->map_height + 1));
-	i = 0;
-	while (tmp != NULL)
+}
+
+int	read_map(int depth, t_env *env, int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	if (line == NULL)
 	{
-		map[i] = tmp;
-		i++;
-		tmp = get_next_line(fd);
+		env->map = ft_calloc(depth + 1, sizeof(char *));
+		env->map[depth] = NULL;
+		env->map_height = depth;
+		return (0);
 	}
-	map[i] = NULL;
-	close(fd);
-	return (map);
+	if (depth == 0)
+		env->map_width = ft_strlen(line) - 2;
+	else if (!line_check(line, env->map_width))
+		return(free(line), -1);
+	if (read_map(depth + 1, env, fd) == -1)
+		return (free(line), -1);
+	env->map[depth] = line;
+	return (1);
 }

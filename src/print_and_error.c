@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:40:10 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 16:19:48 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:31:11 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	print_data(t_env env)
 	int	i;
 
 	i = -1;
-	ft_printf("DIRECTION = %d", env.player_dir);
 	ft_printf("Height -> %d, Width -> %d\n\n", env.map_height, env.map_width);
 	while (env.map[++i])
 		ft_printf("%s", env.map[i]);
