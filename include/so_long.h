@@ -454,7 +454,7 @@ void	update_dir(int old_dir, int new_dir, t_env *env);
 void	ft_del_texture(t_texture *texture, int n);
 
 /**
- * @brief This function redirect to an other function in terms of the keydata
+ * @brief This function redirect to an other function with the keydata
  * 
  * @param keydata The keydata
  * @param param The struct t_env in void type
