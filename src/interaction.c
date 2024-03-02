@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:48:25 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 14:37:44 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/01 17:07:33 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	collectible_test(t_env *env, int pos_x, int pos_y)
 		tmp.z = COLLECIBLE_DEPTH + 1;
 		env->collectible_obtained += 1;
 		env->map[pos_y][pos_x] = '0';
-		load_image(env->mlx, tmp, env->floor_image);
+		load_image(env->mlx, tmp, env->floor_image, true);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/29 17:11:31 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/02 15:15:35 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,4 @@ void	load_map(t_env	*env, char	**map)
 		}
 		i++;
 	}
-	mlx_put_string(env->mlx, "1", ((env->map_width / 2) - 2) * 32, (env->map_height + 1) * 32);
 }

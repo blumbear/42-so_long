@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/29 17:13:16 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/02 15:33:38 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,29 @@ typedef struct wall_image
 }	t_wall_image;
 
 /**
+ * @brief this structure contain the texture temporarily
+ * 
+ */
+typedef struct texture
+{
+	mlx_texture_t		*a;
+	mlx_texture_t		*b;
+	mlx_texture_t		*c;
+	mlx_texture_t		*d;
+}	t_texture;
+
+/**
+ * @brief This structure contains the coord to print or update an image
+ * 
+ */
+typedef struct coord
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_coord;
+
+/**
  * @brief An structure who contain every environments variable
  * 
  */
@@ -74,32 +97,11 @@ typedef struct env
 	int				collectible_obtained;
 	mlx_texture_t	*icon_texture;
 	mlx_image_t		*collectible_image;
+	mlx_image_t		*strmove;
+	t_coord			strmove_coord;
 	t_wall_image	wall_image;
 	mlx_image_t		*floor_image;
 }	t_env;
-
-/**
- * @brief this structure contain the texture temporarily
- * 
- */
-typedef struct texture
-{
-	mlx_texture_t		*a;
-	mlx_texture_t		*b;
-	mlx_texture_t		*c;
-	mlx_texture_t		*d;
-}	t_texture;
-
-/**
- * @brief This structure contains the coord to print or update an image
- * 
- */
-typedef struct coord
-{
-	int	x;
-	int	y;
-	int	z;
-}	t_coord;
 
 /******************************************************************************/
 /*                                                                            */
@@ -226,6 +228,18 @@ void	load_wall(int x, int y, t_env	*env);
  * @param map The map in char **
  */
 void	load_map(t_env	*env, char	**map);
+
+/******************************************************************************/
+/*                                                                            */
+/* Load_Text                                                                  */
+/*                                                                            */
+/******************************************************************************/
+/**
+ * @brief This function load every image use like text
+ * 
+ * @param The struct t_env
+*/
+void	load_text(t_env *env);
 
 /******************************************************************************/
 /*                                                                            */
@@ -454,7 +468,7 @@ void	update_dir(int old_dir, int new_dir, t_env *env);
 void	ft_del_texture(t_texture *texture, int n);
 
 /**
- * @brief This function redirect to an other function with the keydata
+ * @brief This function redirect to an other function in terms of the keydata
  * 
  * @param keydata The keydata
  * @param param The struct t_env in void type
