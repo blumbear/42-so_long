@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:21:36 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 15:48:55 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/07 17:20:38 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	post_pathway(char	**map, t_env *env)
 	int	j;
 	int	nb_collectible_find;
 
-	i = -1;
+	i = 0;
 	nb_collectible_find = 0;
 	env->exit = false;
 	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (map[i][j] < 0)
 			{
@@ -47,7 +47,6 @@ void	post_pathway(char	**map, t_env *env)
 				if (map[i][j] == 'E')
 					env->exit = true;
 			}
-			j++;
 		}
 	}
 	post_pathway_variable_test(nb_collectible_find, env);
@@ -55,6 +54,7 @@ void	post_pathway(char	**map, t_env *env)
 
 void	post_pathway_variable_test(int nb_collectible, t_env *env)
 {
+	//ft_printf("%d | %d\n", nb_collectible, env->collectible);
 	if (nb_collectible != env->collectible)
 		stop_prog("The player cant optain every collectible.", env, true, NULL);
 	if (env->exit == false)

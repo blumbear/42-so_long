@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/02 15:33:38 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 17:42:01 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,22 @@
 # include "MLX42.h"
 # include "libamoa.h"
 
-//-------------------
-# define UP 10
-# define DOWN 11
-# define LEFT 12
-# define RIGHT 13
-//-------------------
 # define PLAYER_DEPTH 3
 # define FLOOR_DEPTH 0
 # define COLLECIBLE_DEPTH 1
 # define EXIT_DEPTH 1
+
+/**
+ * @brief this enum contain every possible directions of the player
+ * 
+ */
+typedef enum e_direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}	t_direction;
 
 /**
  * @brief This structure contain every player's images
@@ -46,6 +52,7 @@ typedef struct player_image
 typedef struct wall_image
 {
 	mlx_image_t	*reduced_full;
+	mlx_image_t	*reduced_top;
 	mlx_image_t	*full;
 	mlx_image_t	*top;
 }	t_wall_image;
@@ -84,14 +91,12 @@ typedef struct env
 	int				map_height;
 	int				map_width;
 	bool			player;
-	int				player_pos_x;
-	int				player_pos_y;
-	int				player_dir;
+	t_coord			player_coord;
+	t_direction		player_dir;
 	t_player_image	player_image;
 	int				player_movement;
 	bool			exit;
-	int				exit_pos_x;
-	int				exit_pos_y;
+	t_coord			exit_coord;
 	mlx_image_t		*exit_image;
 	int				collectible;
 	int				collectible_obtained;
@@ -99,6 +104,8 @@ typedef struct env
 	mlx_image_t		*collectible_image;
 	mlx_image_t		*strmove;
 	t_coord			strmove_coord;
+	mlx_image_t		*strpoint;
+	t_coord			strpoint_coord;
 	t_wall_image	wall_image;
 	mlx_image_t		*floor_image;
 }	t_env;
@@ -457,7 +464,7 @@ void	print_on_move(t_env *env);
  * @param new_dir The new direction
  * @param env The struct t_env
  */
-void	update_dir(int old_dir, int new_dir, t_env *env);
+void	update_dir(t_direction old_dir, t_direction new_dir, t_env *env);
 
 /**
  * @brief this function delete n texture of the variable t_texture

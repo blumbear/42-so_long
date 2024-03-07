@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_text.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 15:02:06 by tom               #+#    #+#             */
-/*   Updated: 2024/03/02 15:27:13 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 15:59:38 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,21 @@
 
 void	load_text(t_env *env)
 {
-	t_coord coord;
+	t_coord		coord;
+	t_texture	*tmp;
 
-	coord.x = (env->map_width / 6);
+	tmp = NULL;
+	tmp = malloc(sizeof(t_texture));
+	coord.x = 1;
 	coord.y = (env->map_height + 1);
 	coord.z = 25;
-	
+	tmp->a = mlx_load_png("texture/text/move.png");
+	tmp->b = mlx_load_png("texture/text/point.png");
 	env->strmove_coord = coord;
-	load_image(env->mlx, coord, mlx_texture_to_image(env->mlx, (mlx_load_png("texture/move.png"))) , true);
-	env->strmove = mlx_put_string(env->mlx, "0", (coord.x + 3) * 32, coord.y * 32);
+	load_image(env->mlx, coord, mlx_texture_to_image(env->mlx, tmp->a) , true);
+	coord.y++;
+	env->strpoint_coord = coord;
+	load_image(env->mlx, coord, mlx_texture_to_image(env->mlx, tmp->b) , true);
+	ft_del_texture(tmp, 2);
+	free(tmp);
 }

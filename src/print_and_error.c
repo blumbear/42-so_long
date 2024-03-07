@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_and_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:40:10 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/02 15:29:37 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 16:48:04 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ void	print_data(t_env env)
 
 void	print_on_move(t_env *env)
 {
-	ft_printf("y -> %d | x -> %d | ", env->player_pos_y, env->player_pos_x);
+	char	*tmp;
+	
+	ft_printf("y -> %d | x -> %d | ", env->player_coord.y, env->player_coord.x);
 	ft_printf("collectible obtained -> %d | ", env->collectible_obtained);
 	ft_printf("number of movement -> %d\n", env->player_movement);
 	mlx_delete_image(env->mlx, env->strmove);
-	env->strmove = mlx_put_string(env->mlx, ft_itoa(env->player_movement), (env->strmove_coord.x + 3) * 32, env->strmove_coord.y * 32);
+	mlx_delete_image(env->mlx, env->strpoint);
+	tmp = ft_itoa(env->player_movement);
+	env->strmove = mlx_put_string(env->mlx, tmp, (env->strmove_coord.x + 3) * 32, env->strmove_coord.y * 32);
+	free(tmp);
+	tmp = ft_itoa(env->collectible_obtained);
+	env->strpoint = mlx_put_string(env->mlx, tmp, (env->strpoint_coord.x + 3) * 32, env->strpoint_coord.y * 32);
+	free(tmp);
 }

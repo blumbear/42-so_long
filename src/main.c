@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:44:53 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/02 15:09:56 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 15:37:08 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int ac, char **av)
 	init_image(env.mlx, &env);
 	mlx_set_icon(env.mlx, env.icon_texture);
 	load_map(&env, env.map);
-	load_text(&env);
 	print_data(env);
+	load_text(&env);
 	print_on_move(&env);
 	mlx_key_hook(env.mlx, &keyhook, &env);
 	mlx_loop(env.mlx);

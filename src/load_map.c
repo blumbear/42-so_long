@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/02 15:15:35 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 17:42:29 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ void	load_wall(int x, int y, t_env	*env)
 		mlx_image_to_window(env->mlx, env->wall_image.top,
 			x * 32, (y + 1) * 32);
 	else
-		mlx_image_to_window(env->mlx, env->wall_image.reduced_full,
-			x * 32, (y + 1) * 32);
+		if (env->map[y + 1][x] == '1')
+			mlx_image_to_window(env->mlx, env->wall_image.reduced_top,
+				x * 32, (y + 1) * 32);
+		else
+			mlx_image_to_window(env->mlx, env->wall_image.reduced_full,
+				x * 32, (y + 1) * 32);
 }
 
 void	load_map(t_env	*env, char	**map)
@@ -80,7 +84,7 @@ void	load_map(t_env	*env, char	**map)
 		{
 			if (map[i][j] == '1')
 				load_wall(j, i, env);
-			else
+			else if (map[i][j] != '\n')
 				pre_load_image(i, j, env);
 			j++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:48:25 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/01 17:07:33 by tom              ###   ########.fr       */
+/*   Updated: 2024/03/07 16:50:53 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	collectible_test(t_env *env, int pos_x, int pos_y)
 void	exit_test(t_env *env, int pos_x, int pos_y)
 {
 	if (env->collectible_obtained == env->collectible
-		&& pos_x == env->exit_pos_x && pos_y == env->exit_pos_y)
+		&& pos_x == env->exit_coord.x && pos_y == env->exit_coord.y)
 		stop_prog("", env, false, NULL);
 }

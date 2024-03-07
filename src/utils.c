@@ -6,13 +6,13 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:56:19 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/29 16:45:27 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:15:45 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	update_dir(int old_dir, int new_dir, t_env *env)
+void	update_dir(t_direction old_dir, t_direction new_dir, t_env *env)
 {
 	if (old_dir == UP && old_dir != new_dir)
 		env->player_image.up->instances->enabled = false;

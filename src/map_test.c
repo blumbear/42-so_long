@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/28 16:34:12 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:48:04 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	map_is_verified(char **map, t_env *env)
 	int	j;
 
 	i = 0;
+	map_surrounded(map, env);
 	while (map[i])
 	{
 		j = 0;
@@ -30,8 +31,7 @@ void	map_is_verified(char **map, t_env *env)
 		i++;
 	}
 	check_variable(env);
-	map_surrounded(map, env);
-	map_pathway(map, env->player_pos_y, env->player_pos_x);
+	map_pathway(map, env->player_coord.y, env->player_coord.x);
 	post_pathway(map, env);
 }
 
@@ -40,14 +40,14 @@ int	chunck_test(char c, t_env	*env, int y, int x)
 	if (ft_strchr("01CPE", c) != NULL)
 	{
 		if (c == 'C')
-			env->collectible += 1;
+			env->collectible ++;
 		if (c == 'P' && env->player == true)
 			stop_prog("Too much player.", env, true, NULL);
-		else if (c == 'P' && env->player == false)
+		else if (c == 'P')
 			ft_init_player(env, x, y);
 		if (c == 'E' && env->exit == true)
 			stop_prog("Too much exit.", env, true, NULL);
-		else if (c == 'E' && env->exit == false)
+		else if (c == 'E')
 			ft_init_exit(env, x, y);
 		return (1);
 	}
@@ -57,6 +57,7 @@ int	chunck_test(char c, t_env	*env, int y, int x)
 
 void	check_variable(t_env *env)
 {
+	ft_printf("%d", env->exit);
 	if (env->collectible < 1)
 		stop_prog("Not enough collectible.", env, true, NULL);
 	if (env->player == false)

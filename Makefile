@@ -3,6 +3,7 @@ NAME = so_long
 LIBMLX = lib/libmlx42.a
 LIBAMOA = lib/libamoa/libamoa.a
 
+
 CC = cc
 
 CFLAGS += -Wall -Wextra -Werror -g -Iinclude
