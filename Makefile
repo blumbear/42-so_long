@@ -11,8 +11,8 @@ CFLAGS += -Wall -Wextra -Werror -g -Iinclude
 LFLAGS = -Llib \
 			-lmlx42 -ldl -lglfw -lXext -lX11 -lm
 
-FILES = ft_init interaction load_map main map_test map_test_bis \
-move parsing print_and_error utils load_text
+FILES = ft_init_image ft_init interaction load_map main map_test \
+map_test_bis move parsing print_and_error utils load_text
 
 OBJ_DIR = obj/
 SRC_DIR = src/

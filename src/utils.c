@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:56:19 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/07 16:15:45 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/09 14:00:06 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	update_dir(t_direction old_dir, t_direction new_dir, t_env *env)
 		env->player_image.right->instances->enabled = true;
 	else if (new_dir == DOWN && old_dir != new_dir)
 		env->player_image.down->instances->enabled = true;
-}	
+}
 
 void	ft_del_texture(t_texture *texture, int n)
 {
@@ -51,19 +51,22 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 	(void)keydata;
 	env = (t_env *)param;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
-		stop_prog("\0", env, false, NULL);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_W)
-		|| mlx_is_key_down(env->mlx, MLX_KEY_UP))
-		up(env);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_S)
-		|| mlx_is_key_down(env->mlx, MLX_KEY_DOWN))
-		down(env);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_A)
-		|| mlx_is_key_down(env->mlx, MLX_KEY_LEFT))
-		left(env);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_D)
-		|| mlx_is_key_down(env->mlx, MLX_KEY_RIGHT))
-		right(env);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_P))
-		print_data(*env);
+		stop_prog("\0", env, false);
+	if (env->key_enaled)
+	{
+		if (mlx_is_key_down(env->mlx, MLX_KEY_W)
+			|| mlx_is_key_down(env->mlx, MLX_KEY_UP))
+			up(env);
+		if (mlx_is_key_down(env->mlx, MLX_KEY_S)
+			|| mlx_is_key_down(env->mlx, MLX_KEY_DOWN))
+			down(env);
+		if (mlx_is_key_down(env->mlx, MLX_KEY_A)
+			|| mlx_is_key_down(env->mlx, MLX_KEY_LEFT))
+			left(env);
+		if (mlx_is_key_down(env->mlx, MLX_KEY_D)
+			|| mlx_is_key_down(env->mlx, MLX_KEY_RIGHT))
+			right(env);
+		if (mlx_is_key_down(env->mlx, MLX_KEY_P))
+			print_data(*env);
+	}
 }

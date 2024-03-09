@@ -6,13 +6,13 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/07 17:42:29 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/09 13:56:48 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	load_image(mlx_t	*mlx, t_coord coord, mlx_image_t *image, bool enabled)
+void	load_image(mlx_t *mlx, t_coord coord, mlx_image_t *image, bool enabled)
 {
 	mlx_image_to_window(mlx, image, coord.x * 32, coord.y * 32);
 	mlx_set_instance_depth(&image->instances[image->count - 1], coord.z);
@@ -21,24 +21,31 @@ void	load_image(mlx_t	*mlx, t_coord coord, mlx_image_t *image, bool enabled)
 
 void	pre_load_image(int y, int x, t_env	*env)
 {
-	t_coord	tmp;
+	t_coord	coord;
 
-	tmp.x = x;
-	tmp.y = y + 1;
-	tmp.z = FLOOR_DEPTH;
-	load_image(env->mlx, tmp, env->floor_image, true);
+	coord.x = x;
+	coord.y = y + 1;
+	coord.z = FLOOR_DEPTH;
+	load_image(env->mlx, coord, env->floor_image, true);
 	if (env->map[y][x] == 'E')
 	{
-		tmp.z = EXIT_DEPTH;
-		load_image(env->mlx, tmp, env->exit_image, true);
+		coord.z = EXIT_DEPTH;
+		load_image(env->mlx, coord, env->exit_image, true);
 	}
 	if (env->map[y][x] == 'C')
 	{
-		tmp.z = COLLECIBLE_DEPTH;
-		load_image(env->mlx, tmp, env->collectible_image, true);
+		coord.z = COLLECIBLE_DEPTH;
+		load_image(env->mlx, coord, env->collectible_image, true);
 	}
 	if (env->map[y][x] == 'P')
-		pre_load_player(tmp, env);
+		pre_load_player(coord, env);
+	if (env->map[y][x] == 'T')
+	{
+		coord.z = TRAP_DEPTH;
+		load_image(env->mlx, coord, env->trap_image.is_in, true);
+		load_image(env->mlx, coord, env->trap_image.between, false);
+		load_image(env->mlx, coord, env->trap_image.is_out, false);
+	}
 }
 
 void	pre_load_player(t_coord coord, t_env *env)
@@ -63,16 +70,18 @@ void	load_wall(int x, int y, t_env	*env)
 		mlx_image_to_window(env->mlx, env->wall_image.top,
 			x * 32, (y + 1) * 32);
 	else
+	{
 		if (env->map[y + 1][x] == '1')
 			mlx_image_to_window(env->mlx, env->wall_image.reduced_top,
 				x * 32, (y + 1) * 32);
 		else
 			mlx_image_to_window(env->mlx, env->wall_image.reduced_full,
 				x * 32, (y + 1) * 32);
+	}
 }
 
 void	load_map(t_env	*env, char	**map)
-{	
+{
 	int	i;
 	int	j;
 

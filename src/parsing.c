@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:28:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/02/29 15:59:47 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/09 13:59:56 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	line_check(char	*line, size_t width)
 
 void	parse(t_env *env, char *map_path)
 {
-	int fd;
+	int	fd;
 
 	fd = open(map_path, O_RDONLY);
 	if (!fd)
-		stop_prog("The file are not found.", env, true, NULL);
+		stop_prog("The file are not found.", env, true);
 	if (read_map(0, env, fd) == -1)
-		stop_prog("The map are not rectangular", env, true, NULL);
+		stop_prog("The map are not rectangular", env, true);
 	if (env->map_height < 3 && env->map_width < 3)
-		stop_prog("The map are not usable.", env, true, NULL);
+		stop_prog("The map are not usable.", env, true);
 }
 
 int	read_map(int depth, t_env *env, int fd)
@@ -49,7 +49,7 @@ int	read_map(int depth, t_env *env, int fd)
 	if (depth == 0)
 		env->map_width = ft_strlen(line) - 2;
 	else if (!line_check(line, env->map_width))
-		return(free(line), -1);
+		return (free(line), -1);
 	if (read_map(depth + 1, env, fd) == -1)
 		return (free(line), -1);
 	env->map[depth] = line;

@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/07 17:42:01 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/09 15:15:33 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define FLOOR_DEPTH 0
 # define COLLECIBLE_DEPTH 1
 # define EXIT_DEPTH 1
+# define TRAP_DEPTH 1
 
 /**
  * @brief this enum contain every possible directions of the player
@@ -37,7 +38,7 @@ typedef enum e_direction
  * @brief This structure contain every player's images
  * 
  */
-typedef struct player_image
+typedef struct s_player_image
 {
 	mlx_image_t	*down;
 	mlx_image_t	*up;
@@ -49,13 +50,20 @@ typedef struct player_image
  * @brief This stucture contain every wall's images
  * 
  */
-typedef struct wall_image
+typedef struct s_wall_image
 {
 	mlx_image_t	*reduced_full;
 	mlx_image_t	*reduced_top;
 	mlx_image_t	*full;
 	mlx_image_t	*top;
 }	t_wall_image;
+
+typedef struct s_trap_image
+{
+	mlx_image_t	*is_in;
+	mlx_image_t	*is_out;
+	mlx_image_t	*between;
+}	t_trap_image;
 
 /**
  * @brief this structure contain the texture temporarily
@@ -73,7 +81,7 @@ typedef struct texture
  * @brief This structure contains the coord to print or update an image
  * 
  */
-typedef struct coord
+typedef struct s_coord
 {
 	int	x;
 	int	y;
@@ -84,55 +92,58 @@ typedef struct coord
  * @brief An structure who contain every environments variable
  * 
  */
-typedef struct env
+typedef struct s_env
 {
+//-----------------------
 	mlx_t			*mlx;
+//-----------------------
+	bool			key_enaled;
+//-----------------------
 	char			**map;
 	int				map_height;
 	int				map_width;
+//-----------------------
+	int				trap_number;
+//-----------------------
 	bool			player;
 	t_coord			player_coord;
 	t_direction		player_dir;
 	t_player_image	player_image;
 	int				player_movement;
+	int				player_hp;
+	char			player_pos_chunck;
+//-----------------------
 	bool			exit;
 	t_coord			exit_coord;
 	mlx_image_t		*exit_image;
+//-----------------------
 	int				collectible;
 	int				collectible_obtained;
-	mlx_texture_t	*icon_texture;
 	mlx_image_t		*collectible_image;
+//-----------------------
+	mlx_texture_t	*icon_texture;
+//-----------------------
 	mlx_image_t		*strmove;
 	t_coord			strmove_coord;
+//-----------------------
 	mlx_image_t		*strpoint;
 	t_coord			strpoint_coord;
+//-----------------------
 	t_wall_image	wall_image;
+//-----------------------
 	mlx_image_t		*floor_image;
+//-----------------------
+	t_trap_image	trap_image;
+//-----------------------
+	int				strlose_size;
+	int				strwin_size;
 }	t_env;
 
 /******************************************************************************/
 /*                                                                            */
-/* Init                                                                       */
+/* FT_Init_image                                                              */
 /*                                                                            */
 /******************************************************************************/
-
-/**
- * @brief This function initializes the player's variable in env
- * 
- * @param env The struct t_env
- * @param pos_x The position X of the player
- * @param pos_y The position Y of the player
- */
-void	ft_init_player(t_env *env, int pos_x, int pos_y);
-
-/**
- * @brief This function initializes the exit's variable in env
- * 
- * @param env The struct t_env
- * @param pos_x The position X of the exit
- * @param pos_y The position Y of the exit
- */
-void	ft_init_exit(t_env *env, int pos_x, int pos_y);
 
 /**
  * @brief This function initializes the ground, collectible and exit images
@@ -159,6 +170,39 @@ void	init_wall_image(mlx_t *mlx, t_env *env);
  */
 void	init_player_image(mlx_t *mlx, t_env *env);
 
+/**
+ * @brief This function initializes trap images in env
+ * 
+ * @param mlx The variable mlx_t
+ * @param env The struct t_env
+ */
+void	init_trap_image(mlx_t *mlx, t_env *env);
+
+
+/******************************************************************************/
+/*                                                                            */
+/* FT_Init                                                                       */
+/*                                                                            */
+/******************************************************************************/
+
+/**
+ * @brief This function initializes the player's variable in env
+ * 
+ * @param env The struct t_env
+ * @param pos_x The position X of the player
+ * @param pos_y The position Y of the player
+ */
+void	ft_init_player(t_env *env, int pos_x, int pos_y);
+
+/**
+ * @brief This function initializes the exit's variable in env
+ * 
+ * @param env The struct t_env
+ * @param pos_x The position X of the exit
+ * @param pos_y The position Y of the exit
+ */
+void	ft_init_exit(t_env *env, int pos_x, int pos_y);
+
 /******************************************************************************/
 /*                                                                            */
 /* Interaction                                                                */
@@ -173,7 +217,7 @@ void	init_player_image(mlx_t *mlx, t_env *env);
  * @param pos_x The position X of the player
  * @param pos_y The position Y of the player
  */
-void	collectible_test(t_env *env, int pos_x, int pos_y);
+void	ft_collectible_test(t_env *env, int pos_x, int pos_y);
 
 /**
  * @brief This function check if the exit have collectible in the direction
@@ -183,7 +227,10 @@ void	collectible_test(t_env *env, int pos_x, int pos_y);
  * @param pos_x The position X of teh player
  * @param pos_y The position Y of the player
  */
-void	exit_test(t_env *env, int pos_x, int pos_y);
+void	ft_exit_test(t_env *env, int pos_x, int pos_y);
+
+void	ft_player_on_trap(t_env *env, int pos_x, int pos_y);
+
 
 /******************************************************************************/
 /*                                                                            */
@@ -434,7 +481,7 @@ int		read_map(int depth, t_env *env, int fd);
  * @param env The struct t_env
  * @param print_error An bool whether print error or not
  */
-void	stop_prog(char	*error, t_env	*env, bool print_error, char *to_free);
+void	stop_prog(char	*error, t_env	*env, bool print_error);
 
 /**
  * @brief This function print The map and his this in the terminal
