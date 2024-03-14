@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/14 14:43:21 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:03:29 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,8 @@ void	init_player_image(mlx_t *mlx, t_env *env);
 /******************************************************************************/
 
 /**
- * @brief This function checks if the player has collectibles in the direction he goes
+ * @brief This function checks if the player has collectibles in the
+ * direction he goes
  * 
  * @param env The struct t_env
  */
@@ -195,7 +196,6 @@ void	exit_test(t_env *env);
  */
 void	player_on_trap(t_env *env);
 
-
 /******************************************************************************/
 /*                                                                            */
 /* Load_map                                                                   */
@@ -209,7 +209,8 @@ void	player_on_trap(t_env *env);
  * @param coord The variable that contains the coord x, y and z of the image
  * @param image The image which will be printed
  */
-void	load_image(mlx_t	*mlx, t_coord	coord, mlx_image_t *image, bool enabled);
+void	load_image(mlx_t	*mlx, t_coord	coord,
+			mlx_image_t *image, bool enabled);
 
 /**
  * @brief This fuction initializes the variable t_coord for the function
@@ -222,7 +223,8 @@ void	load_image(mlx_t	*mlx, t_coord	coord, mlx_image_t *image, bool enabled);
 void	pre_load_image(int i, int j, t_env	*env);
 
 /**
- * @brief This function redirects to load_image in order to load every player's images
+ * @brief This function redirects to load_image in order to load every player's
+ * images
  * 
  * @param coord The coord to load the player's images
  * @param env The struct t_env
@@ -268,7 +270,8 @@ void	load_text_bis(t_env *env);
 /******************************************************************************/
 
 /**
- * @brief This function sets all characters of the map to negative if it ain't a wall
+ * @brief This function sets all characters of the map to negative if it
+ * ain't a wall
  * 
  * @param map The map in char **
  * @param y The position Y of the image
@@ -439,7 +442,8 @@ void	stop_prog(char	*error, t_env	*env);
 void	print_data(t_env env);
 
 /**
- * @brief This function prints at every movement the player does its position and the number
+ * @brief This function prints at every movement the player does its position
+ * and the number
  * of collectibles he has
  * 
  * @param env The struct t_env

@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:21:36 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/10 14:59:53 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:43:17 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	post_pathway(char	**map, t_env *env)
 				map[i][j] *= -1;
 				if (map[i][j] == 'C')
 					nb_collectible_find++;
-				if (map[i][j] == 'E')
+				else if (map[i][j] == 'E')
 					env->exit = true;
 			}
 		}

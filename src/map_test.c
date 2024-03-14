@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:38:29 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/14 14:13:37 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:00:46 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	map_is_verified(char **map, t_env *env)
 	int	j;
 
 	i = 0;
-	map_surrounded(map, env);
 	while (map[i])
 	{
 		j = 0;
@@ -30,6 +29,7 @@ void	map_is_verified(char **map, t_env *env)
 		}
 		i++;
 	}
+	map_surrounded(map, env);
 	check_variable(env);
 	map_pathway(map, env->player_coord.y, env->player_coord.x);
 	post_pathway(map, env);

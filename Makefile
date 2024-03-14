@@ -11,7 +11,7 @@ CFLAGS += -Wall -Wextra -Werror -g -Iinclude
 LFLAGS = -Llib \
 			-lmlx42 -ldl -lglfw -lXext -lX11 -lm
 
-FILES = ft_init_image ft_init interaction load_map main map_test \
+FILES = init_image interaction load_map main map_test \
 map_test_bis move parsing print_and_error utils load_text
 
 OBJ_DIR = obj/
@@ -19,9 +19,11 @@ SRC_DIR = src/
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus deps
 
 all: deps $(NAME)
+
+bonus: all
 
 clean:
 	@echo "\033[32m✔ Suppression des fichiers sources...\033[37m"

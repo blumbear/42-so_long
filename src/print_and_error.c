@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:40:10 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/14 14:47:15 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:04:55 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ void	print_data(t_env env)
 
 void	print_on_move(t_env *env)
 {
-	(void)env;
 	char	*tmp;
 
 	ft_printf("y -> %d | x -> %d\n", env->player_coord.y, env->player_coord.x);
 	mlx_delete_image(env->mlx, env->strmove);
 	mlx_delete_image(env->mlx, env->strpoint);
-	mlx_delete_image(env->mlx, env->strhp);	
+	mlx_delete_image(env->mlx, env->strhp);
 	tmp = ft_itoa(env->player_movement);
 	env->strmove = mlx_put_string(env->mlx, tmp,
 			(env->strmove_coord.x) * 32, (env->strmove_coord.y) * 33);
