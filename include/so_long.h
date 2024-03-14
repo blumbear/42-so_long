@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:05:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/09 15:15:33 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:43:21 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@
 # include "MLX42.h"
 # include "libamoa.h"
 
+/**
+ * @brief The different texture's depths
+ * 
+ */
 # define PLAYER_DEPTH 3
 # define FLOOR_DEPTH 0
 # define COLLECIBLE_DEPTH 1
 # define EXIT_DEPTH 1
 # define TRAP_DEPTH 1
+# define TEXT_DEPTH 1
+//-----------------------
 
 /**
- * @brief this enum contain every possible directions of the player
+ * @brief This enum contains every possible directions of the player
  * 
  */
 typedef enum e_direction
@@ -35,7 +41,7 @@ typedef enum e_direction
 }	t_direction;
 
 /**
- * @brief This structure contain every player's images
+ * @brief This structure contains every player's images
  * 
  */
 typedef struct s_player_image
@@ -47,7 +53,7 @@ typedef struct s_player_image
 }	t_player_image;
 
 /**
- * @brief This stucture contain every wall's images
+ * @brief This stucture contains every walls images
  * 
  */
 typedef struct s_wall_image
@@ -58,15 +64,8 @@ typedef struct s_wall_image
 	mlx_image_t	*top;
 }	t_wall_image;
 
-typedef struct s_trap_image
-{
-	mlx_image_t	*is_in;
-	mlx_image_t	*is_out;
-	mlx_image_t	*between;
-}	t_trap_image;
-
 /**
- * @brief this structure contain the texture temporarily
+ * @brief This structure contains the texture temporarily
  * 
  */
 typedef struct texture
@@ -78,7 +77,7 @@ typedef struct texture
 }	t_texture;
 
 /**
- * @brief This structure contains the coord to print or update an image
+ * @brief This structure contains the coords to print or to update an image
  * 
  */
 typedef struct s_coord
@@ -89,7 +88,7 @@ typedef struct s_coord
 }	t_coord;
 
 /**
- * @brief An structure who contain every environments variable
+ * @brief A structure that contains every environment's variables
  * 
  */
 typedef struct s_env
@@ -105,7 +104,6 @@ typedef struct s_env
 //-----------------------
 	int				trap_number;
 //-----------------------
-	bool			player;
 	t_coord			player_coord;
 	t_direction		player_dir;
 	t_player_image	player_image;
@@ -114,7 +112,6 @@ typedef struct s_env
 	char			player_pos_chunck;
 //-----------------------
 	bool			exit;
-	t_coord			exit_coord;
 	mlx_image_t		*exit_image;
 //-----------------------
 	int				collectible;
@@ -122,32 +119,33 @@ typedef struct s_env
 	mlx_image_t		*collectible_image;
 //-----------------------
 	mlx_texture_t	*icon_texture;
-//-----------------------
+//-----------------------*
 	mlx_image_t		*strmove;
 	t_coord			strmove_coord;
 //-----------------------
 	mlx_image_t		*strpoint;
 	t_coord			strpoint_coord;
 //-----------------------
+	mlx_image_t		*strhp;
+	t_coord			strhp_coord;
+//-----------------------
 	t_wall_image	wall_image;
 //-----------------------
 	mlx_image_t		*floor_image;
 //-----------------------
-	t_trap_image	trap_image;
+	mlx_image_t		*trap_image;
 //-----------------------
-	int				strlose_size;
-	int				strwin_size;
 }	t_env;
 
 /******************************************************************************/
 /*                                                                            */
-/* FT_Init_image                                                              */
+/* init_image                                                                 */
 /*                                                                            */
 /******************************************************************************/
 
 /**
- * @brief This function initializes the ground, collectible and exit images
- * in env and call the other function init_wall_image and init_player_image
+ * @brief This function initializes the ground, collectibles and the exit image
+ * in env and call the other functions init_wall_image and init_player_image
  * 
  * @param mlx The variable mlx_t
  * @param env The struct t_env
@@ -155,7 +153,7 @@ typedef struct s_env
 void	init_image(mlx_t *mlx, t_env *env);
 
 /**
- * @brief This function initializes the wall images in env
+ * @brief This function initializes the wall's images in env
  * 
  * @param mlx The variable mlx_t
  * @param env The struct t_env
@@ -163,45 +161,12 @@ void	init_image(mlx_t *mlx, t_env *env);
 void	init_wall_image(mlx_t *mlx, t_env *env);
 
 /**
- * @brief This function initializes player images in env
+ * @brief This function initializes player's images in env
  * 
  * @param mlx The variable mlx_t
  * @param env The struct t_env
  */
 void	init_player_image(mlx_t *mlx, t_env *env);
-
-/**
- * @brief This function initializes trap images in env
- * 
- * @param mlx The variable mlx_t
- * @param env The struct t_env
- */
-void	init_trap_image(mlx_t *mlx, t_env *env);
-
-
-/******************************************************************************/
-/*                                                                            */
-/* FT_Init                                                                       */
-/*                                                                            */
-/******************************************************************************/
-
-/**
- * @brief This function initializes the player's variable in env
- * 
- * @param env The struct t_env
- * @param pos_x The position X of the player
- * @param pos_y The position Y of the player
- */
-void	ft_init_player(t_env *env, int pos_x, int pos_y);
-
-/**
- * @brief This function initializes the exit's variable in env
- * 
- * @param env The struct t_env
- * @param pos_x The position X of the exit
- * @param pos_y The position Y of the exit
- */
-void	ft_init_exit(t_env *env, int pos_x, int pos_y);
 
 /******************************************************************************/
 /*                                                                            */
@@ -210,26 +175,25 @@ void	ft_init_exit(t_env *env, int pos_x, int pos_y);
 /******************************************************************************/
 
 /**
- * @brief This function check if the player have collectible in the direction
- * where he go
+ * @brief This function checks if the player has collectibles in the direction he goes
  * 
  * @param env The struct t_env
- * @param pos_x The position X of the player
- * @param pos_y The position Y of the player
  */
-void	ft_collectible_test(t_env *env, int pos_x, int pos_y);
+void	collectible_test(t_env *env);
 
 /**
- * @brief This function check if the exit have collectible in the direction
- * where he go
+ * @brief This function checks if the player has all collectibles at the exit
  * 
  * @param env The struct t_env
- * @param pos_x The position X of teh player
- * @param pos_y The position Y of the player
  */
-void	ft_exit_test(t_env *env, int pos_x, int pos_y);
+void	exit_test(t_env *env);
 
-void	ft_player_on_trap(t_env *env, int pos_x, int pos_y);
+/**
+ * @brief This function check whether the player is on a trap or not
+ * 
+ * @param env The struct t_env
+ */
+void	player_on_trap(t_env *env);
 
 
 /******************************************************************************/
@@ -239,11 +203,11 @@ void	ft_player_on_trap(t_env *env, int pos_x, int pos_y);
 /******************************************************************************/
 
 /**
- * @brief This function print the map's image in the game's window
+ * @brief This function prints the map's images in the game's window
  * 
  * @param mlx The variable mlx_t
- * @param coord The variable who contain the coord x, y and z of the image
- * @param image The image who will be print
+ * @param coord The variable that contains the coord x, y and z of the image
+ * @param image The image which will be printed
  */
 void	load_image(mlx_t	*mlx, t_coord	coord, mlx_image_t *image, bool enabled);
 
@@ -258,7 +222,7 @@ void	load_image(mlx_t	*mlx, t_coord	coord, mlx_image_t *image, bool enabled);
 void	pre_load_image(int i, int j, t_env	*env);
 
 /**
- * @brief This function redirect to load_image to load every player's images
+ * @brief This function redirects to load_image in order to load every player's images
  * 
  * @param coord The coord to load the player's images
  * @param env The struct t_env
@@ -266,7 +230,7 @@ void	pre_load_image(int i, int j, t_env	*env);
 void	pre_load_player(t_coord coord, t_env *env);
 
 /**
- * @brief This function print the wall's images in the game's window
+ * @brief This function prints the wall's images in the game's window
  * 
  * @param x The position X of the image
  * @param y The position Y of the image
@@ -275,8 +239,8 @@ void	pre_load_player(t_coord coord, t_env *env);
 void	load_wall(int x, int y, t_env	*env);
 
 /**
- * @brief This function read the map and call pre_load_image or load_wall
- * for print the map in game's window.
+ * @brief This function reads the map and calls pre_load_image or load_wall
+ * in order to print the map in game's window.
  * 
  * @param env The struct t_env
  * @param map The map in char **
@@ -289,11 +253,13 @@ void	load_map(t_env	*env, char	**map);
 /*                                                                            */
 /******************************************************************************/
 /**
- * @brief This function load every image use like text
+ * @brief This function loads every images used as text
  * 
  * @param The struct t_env
 */
 void	load_text(t_env *env);
+
+void	load_text_bis(t_env *env);
 
 /******************************************************************************/
 /*                                                                            */
@@ -302,7 +268,7 @@ void	load_text(t_env *env);
 /******************************************************************************/
 
 /**
- * @brief This function sets the entire character of the map to negative
+ * @brief This function sets all characters of the map to negative if it ain't a wall
  * 
  * @param map The map in char **
  * @param y The position Y of the image
@@ -312,7 +278,7 @@ void	map_pathway(char	**map, int y, int x);
 
 /**
  * @brief This function will check whether the map is feasible or not
- * and redirect to post_pathway_variable_test
+ * and redirects to post_pathway_variable_test
  * 
  * @param map the map in char **
  * @param env The struct t_env
@@ -320,22 +286,13 @@ void	map_pathway(char	**map, int y, int x);
 void	post_pathway(char	**map, t_env *env);
 
 /**
- * @brief This function test if the player can optain the every
- * collectible and reach the exit
+ * @brief This function tests if the player can optain all
+ * collectibles and reach the exit
  * 
- * @param nb_collectible The number of collectible find by post_pathway
+ * @param nb_collectible The number of collectibles found by post_pathway
  * @param env The struct t_env
  */
 void	post_pathway_variable_test(int nb_collectible, t_env *env);
-
-/**
- * @brief This function will check if the map have the good format.
- * Here it's an ".ber"
- * 
- * @param path The path to find the map
- * @param env The struct t_env
- */
-void	check_path_name(char	*path, t_env	*env);
 
 /******************************************************************************/
 /*                                                                            */
@@ -344,8 +301,8 @@ void	check_path_name(char	*path, t_env	*env);
 /******************************************************************************/
 
 /**
- * @brief This function will call every other function to test if the
- * map is valid
+ * @brief This function will call every other function to test whether the
+ * map is valid or not
  * 
  * @param map The map in char **
  * @param env The struct t_env
@@ -353,26 +310,26 @@ void	check_path_name(char	*path, t_env	*env);
 void	map_is_verified(char **map, t_env *env);
 
 /**
- * @brief This function check the map's chunk and
+ * @brief This function checks a map's char whether it is valid or not
  * 
- * @param c The chunk
+ * @param c The char
  * @param env The struct t_env
  * @param y The position Y of the image
  * @param x The position X of the image
- * @return int Whether or not the chunck are valid
+ * @return int Whether or not the char is valid
  */
 int		chunck_test(char c, t_env	*env, int i, int j);
 
 /**
- * @brief This function check if the map have an player, an exit and
- * enough collectible
+ * @brief This function checks if the map has a player, an exit and
+ * enough collectibles
  * 
  * @param env The struct t_env
  */
 void	check_variable(t_env *env);
 
 /**
- * @brief This function check if the map are surrounded by wall
+ * @brief This function checks if the map is surrounded by walls like Mexico
  * 
  * @param map The map in char **
  * @param env The struct t_env
@@ -386,7 +343,7 @@ void	map_surrounded(char **map, t_env *env);
 /******************************************************************************/
 
 /**
- * @brief This function move every image of the player on the axis X or Y
+ * @brief This function moves every image of the player on the axis X or Y
  * 
  * @param env The struct t_env
  * @param axis The axis 
@@ -395,41 +352,32 @@ void	map_surrounded(char **map, t_env *env);
 void	move_player(t_env *env, char axis, int move);
 
 /**
- * @brief This function check if the player con go upward
+ * @brief This function checks if the player can go upwards
  * 
  * @param env The struct t_env
  */
 void	up(t_env	*env);
 
 /**
- * @brief This function check if the player con go downward
+ * @brief This function checks if the player can go downwards
  * 
  * @param env The struct t_env
  */
 void	down(t_env	*env);
 
 /**
- * @brief This function check if the player con go leftward
+ * @brief This function checks if the player can go left
  * 
  * @param env The struct t_env
  */
 void	left(t_env	*env);
 
 /**
- * @brief This function check if the player con go rightward
+ * @brief This function checks if the player can go right
  * 
  * @param env The struct t_env
  */
 void	right(t_env	*env);
-
-/**
- * @brief This function redirect to the function up, down, right,
- * left, and print data
- * 
- * @param keydata The key who are press
- * @param param The struct t_env
- */
-void	keyhook(mlx_key_data_t keydata, void *param);
 
 /******************************************************************************/
 /*                                                                            */
@@ -438,7 +386,7 @@ void	keyhook(mlx_key_data_t keydata, void *param);
 /******************************************************************************/
 
 /**
- * @brief This function check if the line does not contain any wrong character
+ * @brief This function checks if the line does not contain any wrong characters
  * 
  * @param line The line
  * @param width The size of the line
@@ -447,7 +395,7 @@ void	keyhook(mlx_key_data_t keydata, void *param);
 int		line_check(char	*line, size_t width);
 
 /**
- * @brief This function will test if the map are valid and call the function
+ * @brief This function will test if the map is valid and calls the function
  * parse
  * 
  * @param env The struct t_env
@@ -456,14 +404,14 @@ int		line_check(char	*line, size_t width);
 void	parse(t_env *env, char *map_path);
 
 /**
- * @brief This function will read the map recursively and put it in the struct
+ * @brief This function will read the map recursively and puts it in the struct
  * t_env env.
- * The fnuction parse, free every line of the map if onr of them are not valid
+ * The function parse frees every line of the map if one of them ain't valid
  * 
  * @param depth The depth of the line, it is like the axis Y
  * @param env The struct env_t
  * @param fd The file descriptor
- * @return int whether the map are valid or not
+ * @return int whether the map is valid or not
  */
 int		read_map(int depth, t_env *env, int fd);
 
@@ -474,25 +422,25 @@ int		read_map(int depth, t_env *env, int fd);
 /******************************************************************************/
 
 /**
- * @brief This function stop the programme and free every variable who need to
- * be free
+ * @brief This function stops the program and frees every variable which needs to
+ * be freed
  * 
  * @param error The error to print
  * @param env The struct t_env
  * @param print_error An bool whether print error or not
  */
-void	stop_prog(char	*error, t_env	*env, bool print_error);
+void	stop_prog(char	*error, t_env	*env);
 
 /**
- * @brief This function print The map and his this in the terminal
+ * @brief This function prints the map and its data in the terminal
  * 
  * @param env The struct t_env
  */
 void	print_data(t_env env);
 
 /**
- * @brief This function print the position of the player and the number
- * of collectible he obtain
+ * @brief This function prints at every movement the player does its position and the number
+ * of collectibles he has
  * 
  * @param env The struct t_env
  */
@@ -505,7 +453,7 @@ void	print_on_move(t_env *env);
 /******************************************************************************/
 
 /**
- * @brief This function update teh image of the player to update his direction
+ * @brief This function updates the image of the player to update his direction
  * 
  * @param old_dir The old direction
  * @param new_dir The new direction
@@ -514,18 +462,36 @@ void	print_on_move(t_env *env);
 void	update_dir(t_direction old_dir, t_direction new_dir, t_env *env);
 
 /**
- * @brief this function delete n texture of the variable t_texture
+ * @brief this function deletes n textures of the variable t_texture
  * 
  * @param texture The variable t_texture
- * @param n The nun=mber of texture to delete
+ * @param n The number of textures to delete
  */
-void	ft_del_texture(t_texture *texture, int n);
+void	del_texture(t_texture *texture, int n);
 
 /**
- * @brief This function redirect to an other function in terms of the keydata
+ * @brief This function redirects to an other function depending on the keydata
  * 
  * @param keydata The keydata
  * @param param The struct t_env in void type
  */
 void	keyhook(mlx_key_data_t keydata, void *param);
+
+/**
+ * @brief This function will check if the map has the right format.
+ * Here it's a ".ber"
+ * 
+ * @param path The path to find the map
+ * @param env The struct t_env
+ */
+void	check_path_name(char	*path, t_env	*env);
+
+/**
+ * @brief This function initializes player's variables
+ * 
+ * @param env The struct t_env
+ * @param pos_x The player's X position
+ * @param pos_y The player's Y position
+ */
+void	init_player(t_env *env, int pos_x, int pos_y);
 #endif

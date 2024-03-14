@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/09 13:56:48 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:02:25 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	pre_load_image(int y, int x, t_env	*env)
 	if (env->map[y][x] == 'T')
 	{
 		coord.z = TRAP_DEPTH;
-		load_image(env->mlx, coord, env->trap_image.is_in, true);
-		load_image(env->mlx, coord, env->trap_image.between, false);
-		load_image(env->mlx, coord, env->trap_image.is_out, false);
+		load_image(env->mlx, coord, env->trap_image, true);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:21:36 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/09 13:59:34 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/10 14:59:53 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,7 @@ void	post_pathway(char	**map, t_env *env)
 void	post_pathway_variable_test(int nb_collectible, t_env *env)
 {
 	if (nb_collectible != env->collectible)
-		stop_prog("The player cant optain every collectible.", env, true);
+		stop_prog("The player cant optain every collectible.", env);
 	if (env->exit == false)
-		stop_prog("The player cant reach the exit.", env, true);
-}
-
-void	check_path_name(char	*path, t_env	*env)
-{
-	if (ft_strncmp(path + (ft_strlen(path) - 4), ".ber", 4) != 0)
-		stop_prog("The map must be in the format '.ber'.", env, true);
+		stop_prog("The player cant reach the exit.", env);
 }

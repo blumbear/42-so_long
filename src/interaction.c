@@ -6,60 +6,67 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:48:25 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/09 15:23:48 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/14 13:23:25 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_collectible_test(t_env *env, int pos_x, int pos_y)
+void	collectible_test(t_env *env)
 {
 	t_coord	tmp;
 
-	if (env->map[pos_y][pos_x] == 'C')
+	if (env->player_pos_chunck == 'C')
 	{
 		if (env ->player_hp < 3)
 			env->player_hp += 1;
-		tmp.x = pos_x;
-		tmp.y = pos_y + 1;
+		tmp.x = env->player_coord.x;
+		tmp.y = env->player_coord.y + 1;
 		tmp.z = COLLECIBLE_DEPTH + 1;
 		env->collectible_obtained += 1;
-		env->map[pos_y][pos_x] = '0';
+		env->player_pos_chunck = '0';
 		load_image(env->mlx, tmp, env->floor_image, true);
 	}
 }
 
-void	ft_exit_test(t_env *env, int pos_x, int pos_y)
+void	exit_test(t_env *env)
 {
-	t_texture *strlose_texture;
+	t_texture	*strwin_texture;
 
-	strlose_texture = malloc(sizeof(t_texture));
 	if (env->collectible_obtained == env->collectible
-		&& pos_x == env->exit_coord.x && pos_y == env->exit_coord.y)
+		&& env->player_pos_chunck == 'E')
 	{
+		strwin_texture = malloc(sizeof(t_texture));
+		if (!strwin_texture)
+			stop_prog("Malloc have failed", env);
 		env->key_enaled = false;
-		strlose_texture->a = mlx_load_png("texture/text/you_won.png");
-		mlx_image_to_window(env->mlx, mlx_texture_to_image(env->mlx, strlose_texture->a),
-				((env->map_width / 2) - 3) * 32, ((env->map_height / 2)) * 32);
-		ft_del_texture(strlose_texture, 1);
+		strwin_texture->a = mlx_load_png("texture/text/you_won.png");
+		mlx_image_to_window(env->mlx,
+			mlx_texture_to_image(env->mlx, strwin_texture->a),
+			((env->map_width / 2) - ((210 / 32) / 2)) * 32,
+			((env->map_height / 2)) * 32);
+		del_texture(strwin_texture, 1);
 	}
 }
 
-void	ft_player_on_trap(t_env *env, int pos_x, int pos_y)
+void	player_on_trap(t_env *env)
 {
-	t_texture *strwon_texture;
+	t_texture	*strlose_texture;
 
-	strwon_texture = malloc(sizeof(t_texture));
-	if (env->map[pos_y][pos_x] == 'T')
+	if (env->player_pos_chunck == 'T')
 	{
-		strwon_texture->a = mlx_load_png("texture/text/you_lose.png");
+		strlose_texture = malloc(sizeof(t_texture));
+		if (!strlose_texture)
+			stop_prog("Malloc have failed", env);
+		strlose_texture->a = mlx_load_png("texture/text/you_lose.png");
 		env->player_hp -= 2;
-		if (env->player_hp < 0)
+		if (env->player_hp < 1)
 		{
 			env->key_enaled = false;
-			mlx_image_to_window(env->mlx, mlx_texture_to_image(env->mlx, strwon_texture->a),
+			mlx_image_to_window(env->mlx,
+				mlx_texture_to_image(env->mlx, strlose_texture->a),
 				((env->map_width / 2) - 3) * 32, ((env->map_height / 2)) * 32);
 		}
-		ft_del_texture(strwon_texture, 1);
+		del_texture(strlose_texture, 1);
 	}
 }

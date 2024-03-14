@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:28:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/09 13:59:56 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/10 14:53:13 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	parse(t_env *env, char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	if (!fd)
-		stop_prog("The file are not found.", env, true);
+		stop_prog("The file are not found.", env);
 	if (read_map(0, env, fd) == -1)
-		stop_prog("The map are not rectangular", env, true);
+		stop_prog("The map are not rectangular", env);
 	if (env->map_height < 3 && env->map_width < 3)
-		stop_prog("The map are not usable.", env, true);
+		stop_prog("The map are not usable.", env);
 }
 
 int	read_map(int depth, t_env *env, int fd)
