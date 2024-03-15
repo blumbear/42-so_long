@@ -21,24 +21,26 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 .PHONY: all clean fclean re bonus
 
-all: $(NAME) deps
+all: $(NAME)
 
 bonus: all
 
 clean:
 	@echo "\033[32m✔ Suppression des fichiers sources...\033[37m"
 	rm -rf $(OBJ_DIR)
+	make clean -C lib/libamoa
 	@echo "\033[32m✔ Suppression effectuer...\033[37m"
 
 fclean: clean
 	@echo "\033[32m✔ Suppression de l'éxécutable...\033[37m"
 	rm -rf $(NAME)
+	make fclean -C lib/libamoa
 	@echo "\033[32m✔ Suppression effectuer...\033[37m"
 
 re: fclean all
 
-deps:
-	$(MAKE) -C lib/libamoa
+$(LIBAMOA) :
+	make -C lib/libamoa
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBMLX) $(LIBAMOA)
 	@echo "\033[32m✔ Compilation des fichiers sources...\033[37m"
