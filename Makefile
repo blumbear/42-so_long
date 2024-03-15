@@ -21,7 +21,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 .PHONY: all clean fclean re bonus
 
-all: $(NAME)
+all: $(NAME) deps
 
 bonus: all
 
