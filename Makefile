@@ -19,9 +19,9 @@ SRC_DIR = src/
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
-.PHONY: all clean fclean re bonus deps
+.PHONY: all clean fclean re bonus
 
-all: deps $(NAME)
+all: $(NAME)
 
 bonus: all
 
@@ -39,7 +39,6 @@ re: fclean all
 
 deps:
 	$(MAKE) -C lib/libamoa
-	$(MAKE) clean -C lib/libamoa
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBMLX) $(LIBAMOA)
 	@echo "\033[32m✔ Compilation des fichiers sources...\033[37m"
