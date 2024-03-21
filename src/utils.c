@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:56:19 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/10 15:05:13 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:09:35 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,20 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 
 void	check_path_name(char	*path, t_env	*env)
 {
+	int		i;
+	bool	point;
+
 	if (ft_strncmp(path + (ft_strlen(path) - 4), ".ber", 4) != 0)
 		stop_prog("The map must be in the format '.ber'.", env);
+	i = -1;
+	point = false;
+	while (path[++i])
+	{
+		if (path[i] == '.' && point == true)
+			stop_prog("The map is in the format .*.ber", env);
+		if (path[i] == '.')
+			point = true;
+	}
 }
 
 void	init_player(t_env *env, int pos_x, int pos_y)

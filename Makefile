@@ -4,7 +4,6 @@ LIBMLX = lib/libmlx42.a
 LIBAMOA = lib/libamoa/libamoa.a
 
 CC = cc
-
 CFLAGS += -Wall -Wextra -Werror -g -Iinclude
 
 LFLAGS = -Llib \
@@ -25,7 +24,7 @@ all: $(NAME)
 bonus: all
 
 clean:
-	@echo "\033[32m✔ Suppression des fichiers objets...\033[37m"
+	@echo "\033[32m✔ Suppression des fichiers sources...\033[37m"
 	rm -rf $(OBJ_DIR)
 	make clean -C lib/libamoa
 	@echo "\033[32m✔ Suppression effectuer...\033[37m"
@@ -47,6 +46,7 @@ $(NAME): $(OBJ_DIR) $(OBJS) $(LIBMLX) $(LIBAMOA)
 	@echo "\033[32m✔ executable crée...\033[37m"
 
 $(OBJ_DIR):
+	@echo "\033[32m✔ création du repertoire obj...\033[37m"
 	mkdir $@
 	@echo "\033[32m✔ repertoire obj crée...\033[37m"
 

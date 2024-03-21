@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:45:13 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/14 14:02:25 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:42:55 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ void	load_wall(int x, int y, t_env	*env)
 		mlx_image_to_window(env->mlx, env->wall_image.full, x * 32, 0);
 		if (x == 0 || x == env->map_width)
 			mlx_image_to_window(env->mlx, env->wall_image.full, x * 32, 32);
+	}
+	else if (y == 1 && env->map[y][x] == '1' && x)
+	{
+		mlx_image_to_window(env->mlx, env->wall_image.top,
+			x * 32, (y + 1) * 32);
+		mlx_image_to_window(env->mlx, env->wall_image.top,
+			x * 32, (y) * 32);
 	}
 	else if (x == 0 || x == env->map_width || y == env->map_height - 1)
 		mlx_image_to_window(env->mlx, env->wall_image.top,
