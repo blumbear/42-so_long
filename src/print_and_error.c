@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:40:10 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/03/14 15:04:55 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:55:11 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	stop_prog(char	*error, t_env	*env)
 		ft_printf("ERROR\n%s\n", error);
 	if (env->map)
 	{
-		ft_free_lststr(env->map);
+		ft_free_double_array(env->map);
 		free(env->map);
 	}
 	if (env->icon_texture)
