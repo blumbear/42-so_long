@@ -14,9 +14,9 @@
 
 int	line_check(char	*line, size_t width)
 {
-	if (!ft_strchr(line, '\n') && ft_strlen(line) - 1 == width)
+	if (!ft_strchr(line, '\n') && ft_strlen(line) == width)
 		return (1);
-	else if (ft_strlen(line) - 2 == width)
+	else if (ft_strlen(line) - 1 == width)
 		return (1);
 	return (0);
 }
@@ -47,7 +47,7 @@ int	read_map(int depth, t_env *env, int fd)
 		return (0);
 	}
 	if (depth == 0)
-		env->map_width = ft_strlen(line) - 2;
+		env->map_width = ft_strlen(line) - 1;
 	else if (!line_check(line, env->map_width))
 		return (free(line), -1);
 	if (read_map(depth + 1, env, fd) == -1)
